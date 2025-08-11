@@ -1,0 +1,29 @@
+frontend/src/components/MessageForm.tsx
+//make a front end folder usme src usme component and then tsx file
+
+import React, { useState } from 'react';
+import axios from 'axios';
+
+export default function MessageForm() {
+  const [channel, setChannel] = useState('');
+  const [message, setMessage] = useState('');
+  const [scheduleTime, setScheduleTime] = useState('');
+
+  const handleSend = async () => {
+    await axios.post('/api/slack/send', { channel, message });
+  };
+
+  const handleSchedule = async () => {
+    await axios.post('/api/slack/schedule', { channel, message, time: scheduleTime });
+  };
+
+  return (
+    <div>
+      <input placeholder="Channel ID" onChange={(e) => setChannel(e.target.value)} />
+      <textarea placeholder="Message" onChange={(e) => setMessage(e.target.value)} />
+      <input type="datetime-local" onChange={(e) => setScheduleTime(e.target.value)} />
+      <button onClick={handleSend}>Send Now</button>
+      <button onClick={handleSchedule}>Schedule</button>
+    </div>
+  );
+}

@@ -1,0 +1,14 @@
+routes/slackRoutes.ts
+
+import express from 'express';
+import { oauthCallback, sendMessage, scheduleMessage, getScheduledMessages, cancelScheduledMessage } from '../controllers/slackController';
+
+const router = express.Router();
+
+router.get('/oauth/callback', oauthCallback);
+router.post('/send', sendMessage);
+router.post('/schedule', scheduleMessage);
+router.get('/scheduled', getScheduledMessages);
+router.delete('/scheduled/:id', cancelScheduledMessage);
+
+export default router;
